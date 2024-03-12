@@ -6,14 +6,28 @@ import { fetchRevenue, fetchLatestInvoices, fetchCardData } from '@/app/lib/data
 
  
 export default async function Page() {
-  const revenue = await fetchRevenue();
-  const latestInvoices = await fetchLatestInvoices();
+//   const revenue = await fetchRevenue();
+//   const latestInvoices = await fetchLatestInvoices();
+//   const {
+//     numberOfInvoices,
+//     numberOfCustomers,
+//     totalPaidInvoices,
+//     totalPendingInvoices,
+//   } = await fetchCardData();
+
+  const [revenue, latestInvoices, cardData] = await Promise.all([
+    fetchRevenue(),
+    fetchLatestInvoices(),
+    fetchCardData()
+  ]);
+
   const {
     numberOfInvoices,
     numberOfCustomers,
     totalPaidInvoices,
     totalPendingInvoices,
-  } = await fetchCardData();
+  } = cardData;
+
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
